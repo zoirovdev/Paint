@@ -1,6 +1,7 @@
 // GLOBAL VARIABLES
 const canvas = document.querySelector('canvas'),
-    toolBtns = document.querySelectorAll('.tool')
+    toolBtns = document.querySelectorAll('.tool'),
+    fillColor = document.querySelector('#fill-color')
 
 // VARIABLE
 let ctx = canvas.getContext('2d'),
@@ -29,7 +30,9 @@ const startDraw = e => {
 
 // DRAW RECTANGLE
 const drawRectangle = e => {
-    ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY)
+    fillColor.checked
+        ? ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY)
+        : ctx.fillRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY)
 }
 
 // DRAWING
