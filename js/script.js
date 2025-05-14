@@ -4,7 +4,9 @@ const canvas = document.querySelector('canvas'),
     fillColor = document.querySelector('#fill-color'),
     sizeSlider = document.querySelector('#size-slider'),
     colorBtns = document.querySelectorAll('.colors .option'),
-    colorPicker = document.querySelector('#color-picker')
+    colorPicker = document.querySelector('#color-picker'),
+    clearCanvasBtn = document.querySelector('.clear-canvas'),
+    saveImageBtn = document.querySelector('.save-img')
 
 // VARIABLE
 let ctx = canvas.getContext('2d'),
@@ -16,10 +18,18 @@ let ctx = canvas.getContext('2d'),
     prevMouseY,
     snapshot
 
+// SET CANVAS BACKGROUND
+const setCanvasBackground = () => {
+    ctx.fillStyle = '#fff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = selectedColor
+}
+
 // SET CANVAS WIDTH AND HEIGHT
 window.addEventListener('load', () => {
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
+    setCanvasBackground()
 })
 
 // START DRAWING
@@ -119,10 +129,24 @@ colorPicker.addEventListener('change', () => {
     colorPicker.parentElement.click()
 })
 
+// CLEAR CANVAS BUTTON
+clearCanvasBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    setCanvasBackground()
+})
+
 // STOP DRAWING
 const stopDraw = () => {
     isDrawing = false
 }
+
+// SAVE LIKE IMAGE OUR PAINT
+saveImageBtn.addEventListener('click', () => {
+    const link = document.createElement('a')
+    link.download = `Sammi-paint${Date.now()}.jpg`
+    link.href = canvas.toDataURL()
+    link.click()
+})
 
 canvas.addEventListener('mousedown', startDraw)
 canvas.addEventListener('mousemove', drawing)
